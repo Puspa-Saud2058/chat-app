@@ -1,6 +1,10 @@
 'use client'
 import React from 'react';
 import Image from 'next/image'
+import Link from 'next/link';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import GoogleIcon from '@mui/icons-material/Google';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import styles from '../../styles/login.module.css'
@@ -50,6 +54,16 @@ const Login = () =>{
           ) : null}
           <br/>
           <button className={styles.btn} type="submit">LOGIN</button>
+          <Link className={styles.link} href="/">Forget password?</Link>
+          <br/>
+          <span className={styles.span2}>Already have an account?<Link  className={styles.link1} href="/login">Signup</Link></span>
+          <br/>
+          <div className={styles.icon}>
+          <Link href="/"><FacebookIcon className={styles.fb}/></Link>
+          <Link href="/"><GoogleIcon className={styles.go}/></Link>
+          <Link href="/"><LinkedInIcon className={styles.lin}/></Link>
+          </div>
+          
         </Form>
       )}
     </Formik>
