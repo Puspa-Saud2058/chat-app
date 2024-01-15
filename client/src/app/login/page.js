@@ -10,10 +10,17 @@ import * as Yup from 'yup';
 import styles from '../../styles/login.module.css'
 
 const SignupSchema = Yup.object().shape({
-    phoneNumber: Yup.string()
-    .min(10, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
+  isPhoneNumber: Yup.boolean().required(),
+  phoneNumber: Yup.string().when("isPhoneNumber", {
+    is: true,
+    then: Yup.string()
+      .required("Phone number is required")
+      .min(10, "Phone number must be at least 10 characters"),
+    otherwise: Yup.string()
+      .email("Please enter a valid email")
+      .required("Email is required"),
+  }),
+
 password: Yup.string().required("Please provide a valid password").oneOf([Yup.ref('password'), null]).min(5, 'Error'),
 });
 
@@ -30,6 +37,7 @@ const Login = () =>{
 
     <Formik
       initialValues={{
+        isPhoneNumber:'',
         phoneNumber:'',
         password:'',
       }}
@@ -42,13 +50,13 @@ const Login = () =>{
       {({ errors, touched }) => (
         <Form>
            <label className={styles.label}>Phone number</label>
-           <Field className={styles.input} name="phoneNumber" />
+           <Field className={styles.input}  type="text" name="phoneNumber" />
           {errors.phoneNumber && touched.phoneNumber ? (
             <div>{errors.phoneNumber}</div>
           ) : null}
          
           <label className={styles.label}>Password</label>
-          <Field className={styles.input} name="password" />
+          <Field className={styles.input} type="password" name="password" />
           {errors.password && touched.password ? (
             <div>{errors.password}</div>
           ) : null}

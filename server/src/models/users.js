@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose;
 // define shape of the User documents in the collection
 const userSchema = new Schema({
-  phoneNumber: String,
-  email:String, // String is shorthand for {type: String}
+  phoneNumber:{type:String, unique:true},
+  email:{type:String, unique:true}, // String is shorthand for {type: String}
   password: String,
   role: {
     type: String,
